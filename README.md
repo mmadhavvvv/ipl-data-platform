@@ -3,9 +3,12 @@
 A professional full-stack platform for analyzing and visualizing IPL 2022 dataset insights, built as part of the Internship Assignment.
 
 ## 🚀 Deployed URLs
-- **Frontend**: [https://ipl-data-platform-frontend.vercel.app](https://ipl-data-platform-frontend.vercel.app) (Placeholder - Finalize on Vercel)
-- **Backend**: [https://ipl-data-platform-backend.onrender.com](https://ipl-data-platform-backend.onrender.com) (Placeholder - Finalize on Render)
-- **API Docs (Swagger)**: [https://ipl-data-platform-backend.onrender.com/docs](https://ipl-data-platform-backend.onrender.com/docs)
+> [!IMPORTANT]
+> The URLs below are **placeholders**. You must follow the [Deployment Guide](#☁️-deployment-guide) below to host the application on your own accounts and replace these with your actual live URLs.
+
+- **Frontend**: `[Your-Vercel-URL]`
+- **Backend**: `[Your-Render-URL]`
+- **API Docs (Swagger)**: `[Your-Render-URL]/docs`
 
 ## ✨ Features
 - **Dashboard**: Real-time insights with "Wins per Team" and "Matches per Venue" charts.
