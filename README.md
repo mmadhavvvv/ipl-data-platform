@@ -3,12 +3,9 @@
 A professional full-stack platform for analyzing and visualizing IPL 2022 dataset insights, built as part of the Internship Assignment.
 
 ## 🚀 Deployed URLs
-> [!IMPORTANT]
-> The URLs below are **placeholders**. You must follow the [Deployment Guide](#☁️-deployment-guide) below to host the application on your own accounts and replace these with your actual live URLs.
-
-- **Frontend**: `[Your-Vercel-URL]`
-- **Backend**: `[Your-Render-URL]`
-- **API Docs (Swagger)**: `[Your-Render-URL]/docs`
+- **Frontend**: [https://ipl-data-platform-zeta.vercel.app](https://ipl-data-platform-zeta.vercel.app)
+- **Backend**: [https://ipl-backend-mmadhavvvvvv.onrender.com](https://ipl-backend-mmadhavvvvvv.onrender.com)
+- **API Docs (Swagger)**: [https://ipl-backend-mmadhavvvvvv.onrender.com/docs](https://ipl-backend-mmadhavvvvvv.onrender.com/docs)
 
 ## ✨ Features
 - **Dashboard**: Real-time insights with "Wins per Team" and "Matches per Venue" charts.
