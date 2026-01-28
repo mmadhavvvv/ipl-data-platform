@@ -1,11 +1,13 @@
 import React from 'react';
-import { LayoutDashboard, Users, Trophy } from 'lucide-react';
+import { LayoutDashboard, Users, Trophy, Table, CircleUser } from 'lucide-react';
 
 const Sidebar = ({ onNavigate, currentPage }) => {
     const menuItems = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+        { id: 'standings', label: 'Standings', icon: <Table size={20} /> },
         { id: 'matches', label: 'Matches', icon: <Trophy size={20} /> },
         { id: 'teams', label: 'Teams', icon: <Users size={20} /> },
+        { id: 'stats', label: 'Player Stats', icon: <CircleUser size={20} /> },
     ];
 
     return (

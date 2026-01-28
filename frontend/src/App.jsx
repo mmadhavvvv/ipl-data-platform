@@ -3,6 +3,8 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Matches from './pages/Matches';
 import Teams from './pages/Teams';
+import Standings from './pages/Standings';
+import Stats from './pages/Stats';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -12,6 +14,8 @@ function App() {
       case 'dashboard': return <Dashboard />;
       case 'matches': return <Matches />;
       case 'teams': return <Teams />;
+      case 'standings': return <Standings />;
+      case 'stats': return <Stats />;
       default: return <Dashboard />;
     }
   };
