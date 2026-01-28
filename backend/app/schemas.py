@@ -39,3 +39,27 @@ class Match(BaseModel):
 class MatchList(BaseModel):
     total: int
     matches: List[Match]
+
+class Standing(BaseModel):
+    team: Team
+    played: int
+    win: int
+    loss: int
+    nr: int
+    points: int
+    netrr: float
+
+    class Config:
+        from_attributes = True
+
+class PlayerStat(BaseModel):
+    name: str
+    team_abbr: str
+    runs: Optional[int] = 0
+    wickets: Optional[int] = 0
+    average: Optional[float] = 0
+    strike_rate: Optional[float] = 0
+    stat_type: str
+
+    class Config:
+        from_attributes = True

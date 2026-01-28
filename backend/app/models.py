@@ -45,3 +45,28 @@ class Match(Base):
     teama = relationship("Team", foreign_keys=[teama_id])
     teamb = relationship("Team", foreign_keys=[teamb_id])
     winning_team = relationship("Team", foreign_keys=[winning_team_id])
+
+class Standing(Base):
+    __tablename__ = "standings"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    team_id = Column(Integer, ForeignKey("teams.tid"))
+    played = Column(Integer)
+    win = Column(Integer)
+    loss = Column(Integer)
+    nr = Column(Integer)
+    points = Column(Integer)
+    netrr = Column(Float)
+    
+    team = relationship("Team")
+
+class PlayerStat(Base):
+    __tablename__ = "player_stats"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    player_id = Column(Integer) # Can link to a Player model later if needed
+    name = Column(String(255))
+    team_abbr = Column(String(20))
+    runs = Column(Integer, default=0)
+    wickets = Column(Integer, default=0)
+    average = Column(Float)
+    strike_rate = Column(Float)
+    stat_type = Column(String(50)) # 'batting' or 'bowling'

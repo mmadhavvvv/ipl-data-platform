@@ -58,3 +58,15 @@ def get_venue_stats(db: Session = Depends(get_db)):
         .join(models.Match, models.Venue.venue_id == models.Match.venue_id)\
         .group_by(models.Venue.name).all()
     return [{"venue": r[0], "matches": r[1]} for r in results]
+
+@app.get("/standings", response_model=List[schemas.Standing])
+def get_standings(db: Session = Depends(get_db)):
+    return db.query(models.Standing).order_by(models.Standing.points.desc(), models.Standing.netrr.desc()).all()
+
+@app.get("/stats/batting", response_model=List[schemas.PlayerStat])
+def get_batting_stats(db: Session = Depends(get_db)):
+    return db.query(models.PlayerStat).filter(models.PlayerStat.stat_type == "batting").order_by(models.PlayerStat.runs.desc()).all()
+
+@app.get("/stats/bowling", response_model=List[schemas.PlayerStat])
+def get_bowling_stats(db: Session = Depends(get_db)):
+    return db.query(models.PlayerStat).filter(models.PlayerStat.stat_type == "bowling").order_by(models.PlayerStat.wickets.desc()).all()

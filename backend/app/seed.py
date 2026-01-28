@@ -3,7 +3,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from models import Base, Team, Venue, Match
+from models import Base, Team, Venue, Match, Standing, PlayerStat
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ipl_data.db")
 engine = create_engine(DATABASE_URL)
@@ -83,6 +83,64 @@ def seed_data():
                         db.add(match)
                     except Exception as me:
                         print(f"Error seeding match {m['match_id']}: {me}")
+
+        # Seed Standings
+        print("Seeding standings...")
+        standings_path = os.path.join(base_path, "standings", "standings.json")
+        with open(standings_path, "r") as f:
+            standings_data = json.load(f)
+            # Assuming first round standings are for the group stage
+            for s in standings_data["standings"][0]["standings"]:
+                if not db.query(Standing).filter(Standing.team_id == s["team"]["tid"]).first():
+                    standing = Standing(
+                        team_id=s["team"]["tid"],
+                        played=int(s["played"]),
+                        win=int(s["win"]),
+                        loss=int(s["loss"]),
+                        nr=int(s.get("nr", 0)),
+                        points=int(s["points"]),
+                        netrr=float(s["netrr"])
+                    )
+                    db.add(standing)
+
+        # Seed Top Batsmen (Orange Cap contenders)
+        print("Seeding batting stats...")
+        batting_path = os.path.join(base_path, "batting_stats", "batting_most_runs.json")
+        with open(batting_path, "r") as f:
+            batting_data = json.load(f)
+            stats_list = batting_data.get("response", {}).get("stats", [])
+            for p in stats_list[:20]: # Top 20
+                if not db.query(PlayerStat).filter(PlayerStat.player_id == p["player"]["pid"], PlayerStat.stat_type == "batting").first():
+                    stat = PlayerStat(
+                        player_id=p["player"]["pid"],
+                        name=p["player"]["title"],
+                        team_abbr=p["team"]["abbr"],
+                        runs=int(p["runs"]),
+                        average=float(p["average"]) if p.get("average") else 0,
+                        strike_rate=float(p["strike"]) if p.get("strike") else 0,
+                        stat_type="batting"
+                    )
+                    db.add(stat)
+
+        # Seed Top Bowlers (Purple Cap contenders)
+        print("Seeding bowling stats...")
+        bowling_path = os.path.join(base_path, "bowling_stats", "bowling_top_wicket_takers.json")
+        if os.path.exists(bowling_path):
+            with open(bowling_path, "r") as f:
+                bowling_data = json.load(f)
+                stats_list = bowling_data.get("response", {}).get("stats", [])
+                for p in stats_list[:20]:
+                    if not db.query(PlayerStat).filter(PlayerStat.player_id == p["player"]["pid"], PlayerStat.stat_type == "bowling").first():
+                        stat = PlayerStat(
+                            player_id=p["player"]["pid"],
+                            name=p["player"]["title"],
+                            team_abbr=p["team"]["abbr"],
+                            wickets=int(p["wickets"]),
+                            average=float(p["average"]) if p.get("average") else 0,
+                            strike_rate=float(p["strike"]) if p.get("strike") else 0,
+                            stat_type="bowling"
+                        )
+                        db.add(stat)
 
         db.commit()
         db.close()
