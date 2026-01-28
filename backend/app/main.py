@@ -20,6 +20,11 @@ app.add_middleware(
 def health_check():
     return {"status": "healthy"}
 
+@app.get("/", include_in_schema=False)
+def root():
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/docs")
+
 @app.get("/teams", response_model=List[schemas.Team])
 def get_teams(db: Session = Depends(get_db)):
     return db.query(models.Team).all()
