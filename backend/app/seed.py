@@ -1,13 +1,16 @@
 import json
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+import sys
+# Add parent directory to path to allow importing from database.py if run from app dir, 
+# but usually run as module or from root. 
+# We assume run from root as specified in instructions.
+
+from database import engine, SessionLocal
 from datetime import datetime
 from models import Base, Team, Venue, Match, Standing, PlayerStat
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./ipl_data.db")
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# DATABASE_URL is handled in database.py
+
 
 def seed_data():
     try:
